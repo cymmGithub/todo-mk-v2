@@ -46,7 +46,7 @@ todoRouter
     const readDB = JSON.parse(await readFile(DB_PATH, 'utf-8'));
 
     const todoID = JSON.parse(req.params.id);
-    console.log(todoID);
+
     readDB.splice(todoID, 1);
     readDB.forEach((element, i) => {
       if (element.id === todoID) {
