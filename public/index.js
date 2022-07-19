@@ -6,7 +6,7 @@ const options = document.querySelector('.options');
 const content = document.querySelector('#content');
 
 window.addEventListener('load', async () => {
-  const response = await fetch('http://localhost:3000/todo/HOME');
+  const response = await fetch('http://localhost:3000/todo/home');
 
   const readDB = await response.json();
   if (!readDB.length) {
@@ -34,8 +34,8 @@ form.addEventListener('submit', async (e) => {
 
   };
 
-  const response = await fetch('http://localhost:3000/todo/ADD', {
-    method: 'POST',
+  const response = await fetch('http://localhost:3000/todo', {
+    method: 'post',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -49,16 +49,15 @@ form.addEventListener('submit', async (e) => {
 
 tdList.addEventListener('click', async (e) => {
   if (e.target.name === 'deleteBtn') {
-    updateTodoDB('DELETE', e.target.id);
+    updateTodo('delete', e.target.id);
   }
 });
 
 tdList.addEventListener('click', async (e) => {
-  // e.target.checked ? updateTodoDB('PUT', e.target.id) : updateTodoDB('PUT', e.target.id);
   if (e.target.checked) {
-    updateTodoDB('PUT', e.target.id);
+    updateTodo('put', e.target.id);
   } else if (e.target.checked === false) {
-    updateTodoDB('PUT', e.target.id);
+    updateTodo('put', e.target.id);
   }
 });
 

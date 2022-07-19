@@ -1,4 +1,4 @@
-const updateTodoDB = async (method, id) => {
+const updateTodo = async (method, id) => {
   const response = await fetch(`http://localhost:3000/todo/${method}/${id}`, {
     method,
     headers: {

@@ -7,7 +7,7 @@ const DB_PATH = 'db/dbArray.json';
 
 todoRouter
 
-  .get('/HOME', async (req, res) => {
+  .get('/home', async (req, res) => {
     try {
       const readedDB = await readFile(DB_PATH, 'utf-8');
 
@@ -18,7 +18,7 @@ todoRouter
       }
     }
   })
-  .post('/ADD', async (req, res) => {
+  .post('/', async (req, res) => {
     const data = req.body;
 
     const todo = {
@@ -42,11 +42,10 @@ todoRouter
 
     res.json(parsedData);
   })
-  .delete('/DELETE/:id', async (req, res) => {
+  .delete('/delete/:id', async (req, res) => {
     const readDB = JSON.parse(await readFile(DB_PATH, 'utf-8'));
 
     const todoID = JSON.parse(req.params.id);
-
     readDB.splice(todoID, 1);
     readDB.forEach((element, i) => {
       if (element.id === todoID) {
@@ -57,10 +56,9 @@ todoRouter
     await writeFile(DB_PATH, JSON.stringify(readDB), 'utf8');
     res.json(readDB);
   })
-  .put('/PUT/:id', async (req, res) => {
+  .put('/put/:id', async (req, res) => {
     const readDB = JSON.parse(await readFile(DB_PATH, 'utf-8'));
     const todoID = JSON.parse(req.params.id);
-    console.log(todoID);
 
     readDB.forEach((element) => {
       if (element.id === todoID && element.completed === true) {
