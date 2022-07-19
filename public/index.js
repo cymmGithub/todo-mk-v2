@@ -6,7 +6,7 @@ const options = document.querySelector('.options');
 const content = document.querySelector('#content');
 
 window.addEventListener('load', async () => {
-  const response = await fetch('http://localhost:3000/todo/home');
+  const response = await fetch('http://localhost:3000/todo/');
 
   const readDB = await response.json();
   if (!readDB.length) {
@@ -49,15 +49,15 @@ form.addEventListener('submit', async (e) => {
 
 tdList.addEventListener('click', async (e) => {
   if (e.target.name === 'deleteBtn') {
-    updateTodo('delete', e.target.id);
+    fetchTodo('delete', e.target.id);
   }
 });
 
 tdList.addEventListener('click', async (e) => {
   if (e.target.checked) {
-    updateTodo('put', e.target.id);
+    fetchTodo('put', e.target.id);
   } else if (e.target.checked === false) {
-    updateTodo('put', e.target.id);
+    fetchTodo('put', e.target.id);
   }
 });
 

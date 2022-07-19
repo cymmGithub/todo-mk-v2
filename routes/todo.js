@@ -1,13 +1,16 @@
 const express = require('express');
-
-const { writeFile, readFile } = require('fs').promises;
+const { readFile } = require('fs').promises;
+const { saveTodo } = require('../public/utils/saveTodo');
+const { deleteTodo } = require('../public/utils/deleteTodo');
+const { updateTodo } = require('../public/utils/updateTodo');
 
 const todoRouter = express.Router();
+
 const DB_PATH = 'db/dbArray.json';
 
 todoRouter
 
-  .get('/home', async (req, res) => {
+  .get('/', async (req, res) => {
     try {
       const readedDB = await readFile(DB_PATH, 'utf-8');
 
@@ -20,59 +23,20 @@ todoRouter
   })
   .post('/', async (req, res) => {
     const data = req.body;
-
-    const todo = {
-
-      id: new Date().valueOf(),
-      completed: false,
-      taskContent: data.taskContent,
-      priority: data.priority,
-    };
-
-    let readDB = await readFile(DB_PATH, 'utf-8');
-    if (readDB === '') {
-      readDB = [];
-      readDB.push(todo);
-      await writeFile(DB_PATH, JSON.stringify(readDB), 'utf8');
-    }
-    const parsedData = JSON.parse(readDB);
-
-    parsedData.push(todo);
-    await writeFile(DB_PATH, JSON.stringify(parsedData), 'utf8');
+    const parsedData = await saveTodo(data);
 
     res.json(parsedData);
   })
   .delete('/delete/:id', async (req, res) => {
-    const readDB = JSON.parse(await readFile(DB_PATH, 'utf-8'));
-
     const todoID = JSON.parse(req.params.id);
-    readDB.splice(todoID, 1);
-    readDB.forEach((element, i) => {
-      if (element.id === todoID) {
-        readDB.splice(i, 1);
-      }
-    });
-
-    await writeFile(DB_PATH, JSON.stringify(readDB), 'utf8');
-    res.json(readDB);
+    const parsedDB = await deleteTodo(todoID);
+    res.json(parsedDB);
   })
   .put('/put/:id', async (req, res) => {
-    const readDB = JSON.parse(await readFile(DB_PATH, 'utf-8'));
     const todoID = JSON.parse(req.params.id);
+    const parsedDB = await updateTodo(todoID);
 
-    readDB.forEach((element) => {
-      if (element.id === todoID && element.completed === true) {
-        element.completed = false;
-      } else if (element.id === todoID) {
-        element.completed = true;
-      }
-    });
-
-    await writeFile(DB_PATH, JSON.stringify(readDB), {
-      encoding: 'utf-8',
-    });
-
-    res.json(readDB);
+    res.json(parsedDB);
   });
 
 module.exports = { todoRouter };
