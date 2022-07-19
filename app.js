@@ -7,7 +7,6 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use('/todo', todoRouter);
 
-app.listen(
-  process.env.PORT || 3000,
-  () => console.log('Server is running...'),
-);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => console.log(`listening on ${PORT}`));
