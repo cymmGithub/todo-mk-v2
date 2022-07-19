@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Todo List 2022 with LocalStorage</title>
+	<!-- CSS Import -->
+	<link rel="stylesheet" href="/styles/index.css" />
+	<!-- End of CSS Import -->
+	<!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Play&family=Roboto&display=swap" rel="stylesheet">
+	<!-- End of Fonts -->
+
+</head>
+<body>
+	<!-- App Wrapper -->
+	<main class="app">
+		<!-- Greeting -->
+		<section class="greeting">
+			<h2 class="title">
+				CREATE A TODO
+			</h2>
+		</section>
+		<!-- End of Greeting -->
+		
+		<!-- New Todo -->
+		<section class="create-todo">
+			
+			<form id="new-todo-form" method='post' action="/todo/add">
+				<input 
+					type="text" 
+					placeholder="What's on your todo?"
+					name="content"
+					id="content" />
+				
+				<h4>Pick a category</h4>
+				<div class="options">
+					<label>
+						<input type="radio" name="category" id="category1" value="low" /> 
+						<span class="bubble low"></span>
+						<div>Low Priority</div>
+					</label>
+					<label>
+						<input type="radio" name="category" id="category2" value="high" />
+						<span class="bubble high"></span>
+						<div>High Priority</div>
+					</label>
+				</div>
+
+				<input type="submit" value="Add todo" />
+			</form>
+		</section>
+		<!-- End of New Todo -->
+
+		<!-- Todo List -->
+		<section class="todo-list">
+				<div class="td-list-header">
+					<h3>TODO LIST</h3>
+
+				</div>
+			<div class="list" id="todo-list"></div>
+		</section>
+		<!-- End of Todo List -->
+
+	</main>
+	<!-- End of App Wrapper -->
+
+	<!-- JS Import -->
+
+	<script src="/index.js"></script>
+    <script src="/utils/showTodos.js"></script>
+	<script src="/utils/updateTodo.js"></script>
+	<!-- End of JS Import -->
+</body>
+</html>
